@@ -10,6 +10,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/events', [EventCatalogController::class, 'index'])->name('events.index');
 Route::get('/events/{event}', [EventCatalogController::class, 'show'])->name('events.show');
 
+// Placeholder — replaced in C27
+Route::post('/events/{event}/register', fn () => back())->middleware('auth')->name('events.register');
+
 // Placeholder — replaced in C40
 Route::get('/notifications', fn () => redirect('/'))->name('notifications.index');
 
