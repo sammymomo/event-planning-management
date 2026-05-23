@@ -3,9 +3,10 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="text-lg font-bold text-indigo-600">
-                        {{ config('app.name') }}
+                <div class="shrink-0 flex items-center gap-2">
+                    <a href="{{ route('home') }}" class="flex items-center gap-2">
+                        <x-application-logo class="w-8 h-8" />
+                        <span class="text-base font-bold text-gray-900">{{ config('app.name') }}</span>
                     </a>
                 </div>
 
@@ -88,7 +89,7 @@
                     </x-dropdown>
                 @else
                     <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-gray-900">Log in</a>
-                    <a href="{{ route('register') }}" class="text-sm bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Register</a>
+                    <a href="{{ route('register') }}" class="text-sm bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Sign Up</a>
                 @endauth
             </div>
 

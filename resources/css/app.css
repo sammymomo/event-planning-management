@@ -6,5 +6,8 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+    --color-brand: #16a34a;
+    --color-brand-dark: #15803d;
+    --color-brand-light: #dcfce7;
 }
