@@ -17,4 +17,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth', 'role:organizer'])->prefix('organizer')->name('organizer.')->group(function () {
+    // Organizer routes added in later commits
+});
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Admin routes added in later commits
+});
+
+Route::middleware(['auth', 'role:volunteer'])->prefix('volunteer')->name('volunteer.')->group(function () {
+    // Volunteer routes added in later commits
+});
+
+Route::middleware(['auth', 'role:sponsor'])->prefix('sponsor')->name('sponsor.')->group(function () {
+    // Sponsor routes added in later commits
+});
+
 require __DIR__.'/auth.php';
