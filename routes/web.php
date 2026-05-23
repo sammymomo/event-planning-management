@@ -1,13 +1,14 @@
 <?php
 
+use App\Http\Controllers\EventCatalogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Placeholder — replaced in C16
-Route::get('/events', fn () => redirect('/'))->name('events.index');
+Route::get('/events', [EventCatalogController::class, 'index'])->name('events.index');
+Route::get('/events/{event}', [EventCatalogController::class, 'show'])->name('events.show');
 
 // Placeholder — replaced in C40
 Route::get('/notifications', fn () => redirect('/'))->name('notifications.index');
