@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventCatalogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Organizer\DashboardController as OrganizerDashboardController;
+use App\Http\Controllers\Organizer\EventController as OrganizerEventController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,9 +30,13 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'role:organizer'])->prefix('organizer')->name('organizer.')->group(function () {
     Route::get('/dashboard', [OrganizerDashboardController::class, 'index'])->name('dashboard');
-    // Placeholders — replaced in C19/C20/C21/C22
-    Route::get('/events/create', fn () => redirect('/organizer/dashboard'))->name('events.create');
-    Route::get('/events/{event}/edit', fn () => redirect('/organizer/dashboard'))->name('events.edit');
+    Route::get('/events/create', [OrganizerEventController::class, 'create'])->name('events.create');
+    Route::post('/events', [OrganizerEventController::class, 'store'])->name('events.store');
+    Route::get('/events/{event}/edit', [OrganizerEventController::class, 'edit'])->name('events.edit');
+    Route::put('/events/{event}', [OrganizerEventController::class, 'update'])->name('events.update');
+    Route::post('/events/{event}/tasks', [OrganizerEventController::class, 'storeTask'])->name('events.tasks.store');
+    Route::delete('/events/{event}/tasks/{task}', [OrganizerEventController::class, 'destroyTask'])->name('events.tasks.destroy');
+    // Placeholders — replaced in C21/C22
     Route::get('/events/{event}/attendees', fn () => redirect('/organizer/dashboard'))->name('events.attendees');
     Route::get('/events/{event}/feedback', fn () => redirect('/organizer/dashboard'))->name('events.feedback');
 });
