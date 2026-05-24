@@ -52,6 +52,16 @@ class User extends Authenticatable
         return $this->role === UserRole::User;
     }
 
+    public function organizedEvents(): HasMany
+    {
+        return $this->hasMany(Event::class, 'organizer_id');
+    }
+
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
+
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class);
