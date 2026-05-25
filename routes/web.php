@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventCatalogController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Organizer\AttendeeController as OrganizerAttendeeController;
 use App\Http\Controllers\Organizer\DashboardController as OrganizerDashboardController;
 use App\Http\Controllers\Organizer\EventController as OrganizerEventController;
@@ -44,7 +45,13 @@ Route::middleware(['auth', 'role:organizer'])->prefix('organizer')->name('organi
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/events', fn () => redirect('/'))->name('events.index');
+    Route::get('/events', [AdminEventController::class, 'index'])->name('events.index');
+    Route::patch('/events/{event}/approve', [AdminEventController::class, 'approve'])->name('events.approve');
+    Route::patch('/events/{event}/reject', [AdminEventController::class, 'reject'])->name('events.reject');
+    // Placeholders — replaced in C24/C25/C26
+    Route::get('/users', fn () => redirect('/admin/events'))->name('users.index');
+    Route::get('/reports', fn () => redirect('/admin/events'))->name('reports.index');
+    Route::get('/settings', fn () => redirect('/admin/events'))->name('settings.index');
 });
 
 Route::middleware(['auth', 'role:volunteer'])->prefix('volunteer')->name('volunteer.')->group(function () {
