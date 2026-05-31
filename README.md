@@ -1,58 +1,87 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CommunityConnect
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A community event planning and management platform built with Laravel 13. Supports five roles — community member, organizer, volunteer, admin, and sponsor — with event creation, registration, volunteer task management, sponsorship tracking, and in-app notifications.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Prerequisites
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Install the following before running the setup script:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Tool | Version | Download |
+|------|---------|----------|
+| PHP | 8.3+ | https://www.php.net/downloads |
+| Composer | latest | https://getcomposer.org/download |
+| Node.js | 18+ | https://nodejs.org |
+| MySQL | 8.0+ | https://dev.mysql.com/downloads/mysql |
 
-## Learning Laravel
+> **Mac (Homebrew):** `brew install php composer node mysql`
+>
+> **Windows:** Use [XAMPP](https://www.apachefriends.org) for PHP + MySQL, then install Composer and Node separately.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Setup
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
+**1. Clone the repository**
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/sammymomo/event-planning-management.git
+cd event-planning-management
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+**2. Create the MySQL database**
 
-## Contributing
+Log into MySQL and create a database:
+```sql
+CREATE DATABASE communityconnect;
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**3. Run the setup script**
+```bash
+bash setup.sh
+```
 
-## Code of Conduct
+The script will:
+- Install PHP and JS dependencies
+- Create your `.env` file
+- Ask for your database name, username, and password
+- Run all database migrations
+- Build frontend assets
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**4. Start the server**
+```bash
+php artisan serve
+```
 
-## Security Vulnerabilities
+Open **http://localhost:8000** in your browser.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## Creating an Admin Account
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Admin accounts cannot be self-registered. After signing up on the site, promote your account via the terminal:
+
+```bash
+php artisan tinker --execute="App\Models\User::where('email','your@email.com')->update(['role'=>'admin']);"
+```
+
+---
+
+## User Roles
+
+| Role | What they can do |
+|------|-----------------|
+| **Member** | Browse events, register, submit feedback |
+| **Organizer** | Create and manage events, view attendees and feedback |
+| **Volunteer** | Sign up for volunteer tasks, manage schedule |
+| **Sponsor** | Submit sponsorships, view acknowledgments and reports |
+| **Admin** | Approve events, manage users, view audit logs |
+
+---
+
+## Tech Stack
+
+- **Backend:** Laravel 13, PHP 8.3
+- **Database:** MySQL
+- **Frontend:** Blade, Tailwind CSS v4, Alpine.js
+- **Auth:** Laravel Breeze

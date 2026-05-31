@@ -1,10 +1,5 @@
 <x-app-layout>
-    <div class="bg-white border-b border-gray-100">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h1 class="text-2xl font-bold text-gray-900">User Management</h1>
-            <p class="text-gray-500 mt-1">Search, assign roles, and block users</p>
-        </div>
-    </div>
+    @include('admin.partials.tabs')
 
     <div class="bg-gray-50 min-h-screen py-8">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
