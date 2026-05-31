@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventCatalogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Organizer\AttendeeController as OrganizerAttendeeController;
 use App\Http\Controllers\Organizer\DashboardController as OrganizerDashboardController;
 use App\Http\Controllers\Organizer\EventController as OrganizerEventController;
@@ -48,8 +49,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/events', [AdminEventController::class, 'index'])->name('events.index');
     Route::patch('/events/{event}/approve', [AdminEventController::class, 'approve'])->name('events.approve');
     Route::patch('/events/{event}/reject', [AdminEventController::class, 'reject'])->name('events.reject');
-    // Placeholders — replaced in C24/C25/C26
-    Route::get('/users', fn () => redirect('/admin/events'))->name('users.index');
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+    Route::patch('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+    Route::patch('/users/{user}/toggle-block', [AdminUserController::class, 'toggleBlock'])->name('users.toggle-block');
+    // Placeholders — replaced in C25/C26
     Route::get('/reports', fn () => redirect('/admin/events'))->name('reports.index');
     Route::get('/settings', fn () => redirect('/admin/events'))->name('settings.index');
 });
