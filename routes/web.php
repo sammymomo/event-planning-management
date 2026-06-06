@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\EventCatalogController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\Admin\ReportController as AdminReportController;
+use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Organizer\AttendeeController as OrganizerAttendeeController;
 use App\Http\Controllers\Organizer\DashboardController as OrganizerDashboardController;
@@ -16,8 +19,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/events', [EventCatalogController::class, 'index'])->name('events.index');
 Route::get('/events/{event}', [EventCatalogController::class, 'show'])->name('events.show');
 
-// Placeholder — replaced in C27
-Route::post('/events/{event}/register', fn () => back())->middleware('auth')->name('events.register');
+Route::post('/events/{event}/register', [RegistrationController::class, 'store'])->middleware('auth')->name('events.register');
+Route::delete('/events/{event}/register', [RegistrationController::class, 'destroy'])->middleware('auth')->name('events.unregister');
+Route::get('/my-registrations', [RegistrationController::class, 'index'])->middleware('auth')->name('member.registrations');
 
 // Placeholder — replaced in C40
 Route::get('/notifications', fn () => redirect('/'))->name('notifications.index');
@@ -53,9 +57,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
     Route::patch('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
     Route::patch('/users/{user}/toggle-block', [AdminUserController::class, 'toggleBlock'])->name('users.toggle-block');
-    // Placeholders — replaced in C25/C26
-    Route::get('/reports', fn () => redirect('/admin/events'))->name('reports.index');
-    Route::get('/settings', fn () => redirect('/admin/events'))->name('settings.index');
+    Route::get('/reports', [AdminReportController::class, 'index'])->name('reports.index');
+    Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings.index');
+    Route::patch('/settings', [AdminSettingController::class, 'update'])->name('settings.update');
 });
 
 Route::middleware(['auth', 'role:volunteer'])->prefix('volunteer')->name('volunteer.')->group(function () {
