@@ -33,7 +33,7 @@ cd event-planning-management
 
 Log into MySQL and create a database:
 ```sql
-CREATE DATABASE communityconnect;
+CREATE DATABASE community_event_planning_system;
 ```
 
 **3. Run the setup script**

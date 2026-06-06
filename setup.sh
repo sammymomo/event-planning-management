@@ -22,8 +22,8 @@ php artisan key:generate
 echo ""
 echo "Database setup"
 echo "--------------"
-read -p "Database name (default: communityconnect): " DB_NAME
-DB_NAME=${DB_NAME:-communityconnect}
+read -p "Database name (default: community_event_planning_system): " DB_NAME
+DB_NAME=${DB_NAME:-community_event_planning_system}
 
 read -p "Database username (default: root): " DB_USER
 DB_USER=${DB_USER:-root}
