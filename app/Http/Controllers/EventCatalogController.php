@@ -42,7 +42,7 @@ class EventCatalogController extends Controller
     {
         abort_if($event->status !== EventStatus::Approved, 404);
 
-        $event->load(['organizer', 'volunteerTasks', 'feedback.user']);
+        $event->load(['organizer', 'volunteerTasks', 'feedback.user', 'registrations']);
 
         $avgRating = $event->feedback->avg('rating');
         $taskCount = $event->volunteerTasks->count();

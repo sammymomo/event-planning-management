@@ -143,18 +143,48 @@
                 <!-- Sidebar -->
                 <div class="space-y-4">
 
+                    <!-- Flash messages -->
+                    @if(session('success'))
+                        <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-700">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if(session('error'))
+                        <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     <!-- Register / Actions -->
                     <div class="bg-white rounded-xl shadow-sm p-5">
                         <h3 class="font-semibold text-gray-900 mb-4">Join This Event</h3>
                         @auth
                             @if(auth()->user()->isUser())
-                                <form method="POST" action="{{ route('events.register', $event) }}">
-                                    @csrf
-                                    <button type="submit"
-                                        class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition text-sm">
-                                        Register Now
-                                    </button>
-                                </form>
+                                @php
+                                    $myReg = $event->registrations->where('user_id', auth()->id())->whereNotIn('status', [\App\Enums\RegistrationStatus::Canceled])->first();
+                                @endphp
+                                @if($myReg)
+                                    <div class="text-center py-2 mb-3">
+                                        <span class="inline-block bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">You're registered!</span>
+                                    </div>
+                                    <form method="POST" action="{{ route('events.unregister', $event) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            onclick="return confirm('Cancel your registration?')"
+                                            class="w-full border border-red-300 text-red-600 py-2.5 rounded-lg font-semibold hover:bg-red-50 transition text-sm">
+                                            Cancel Registration
+                                        </button>
+                                    </form>
+                                @else
+                                    <form method="POST" action="{{ route('events.register', $event) }}">
+                                        @csrf
+                                        <button type="submit"
+                                            class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition text-sm">
+                                            Register Now
+                                        </button>
+                                    </form>
+                                @endif
                             @elseif(auth()->user()->isVolunteer() && $event->volunteerTasks->isNotEmpty())
                                 <a href="{{ route('volunteer.tasks.index') }}"
                                    class="block w-full text-center bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition text-sm">

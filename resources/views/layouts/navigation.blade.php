@@ -21,6 +21,12 @@
                     </x-nav-link>
 
                     @auth
+                        @if(auth()->user()->isUser())
+                            <x-nav-link :href="route('member.registrations')" :active="request()->routeIs('member.*')">
+                                My Registrations
+                            </x-nav-link>
+                        @endif
+
                         @if(auth()->user()->isOrganizer())
                             <x-nav-link :href="route('organizer.dashboard')" :active="request()->routeIs('organizer.*')">
                                 My Events
@@ -117,6 +123,12 @@
             </x-responsive-nav-link>
 
             @auth
+                @if(auth()->user()->isUser())
+                    <x-responsive-nav-link :href="route('member.registrations')" :active="request()->routeIs('member.*')">
+                        My Registrations
+                    </x-responsive-nav-link>
+                @endif
+
                 @if(auth()->user()->isOrganizer())
                     <x-responsive-nav-link :href="route('organizer.dashboard')" :active="request()->routeIs('organizer.*')">
                         My Events
