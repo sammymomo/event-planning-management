@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventCatalogController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\Volunteer\AvailabilityController as VolunteerAvailabilityController;
+use App\Http\Controllers\Volunteer\ScheduleController as VolunteerScheduleController;
+use App\Http\Controllers\Volunteer\TaskController as VolunteerTaskController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
@@ -22,13 +27,13 @@ Route::get('/events/{event}', [EventCatalogController::class, 'show'])->name('ev
 Route::post('/events/{event}/register', [RegistrationController::class, 'store'])->middleware('auth')->name('events.register');
 Route::delete('/events/{event}/register', [RegistrationController::class, 'destroy'])->middleware('auth')->name('events.unregister');
 Route::get('/my-registrations', [RegistrationController::class, 'index'])->middleware('auth')->name('member.registrations');
+Route::get('/events/{event}/feedback/create', [FeedbackController::class, 'create'])->middleware('auth')->name('events.feedback.create');
+Route::post('/events/{event}/feedback', [FeedbackController::class, 'store'])->middleware('auth')->name('events.feedback.store');
 
 // Placeholder — replaced in C40
 Route::get('/notifications', fn () => redirect('/'))->name('notifications.index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -63,7 +68,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 
 Route::middleware(['auth', 'role:volunteer'])->prefix('volunteer')->name('volunteer.')->group(function () {
-    Route::get('/tasks', fn () => redirect('/'))->name('tasks.index');
+    Route::get('/tasks', [VolunteerTaskController::class, 'index'])->name('tasks.index');
+    Route::post('/tasks/{task}/signup', [VolunteerTaskController::class, 'signup'])->name('tasks.signup');
+    Route::delete('/tasks/{task}/leave', [VolunteerTaskController::class, 'leave'])->name('tasks.leave');
+    Route::get('/schedule', [VolunteerScheduleController::class, 'index'])->name('schedule.index');
+    Route::get('/availability', [VolunteerAvailabilityController::class, 'edit'])->name('availability.edit');
+    Route::patch('/availability', [VolunteerAvailabilityController::class, 'update'])->name('availability.update');
 });
 
 Route::middleware(['auth', 'role:sponsor'])->prefix('sponsor')->name('sponsor.')->group(function () {
