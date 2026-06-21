@@ -5,6 +5,7 @@ use App\Http\Controllers\EventCatalogController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\Sponsor\DashboardController as SponsorDashboardController;
 use App\Http\Controllers\Volunteer\AvailabilityController as VolunteerAvailabilityController;
 use App\Http\Controllers\Volunteer\ScheduleController as VolunteerScheduleController;
 use App\Http\Controllers\Volunteer\TaskController as VolunteerTaskController;
@@ -77,7 +78,11 @@ Route::middleware(['auth', 'role:volunteer'])->prefix('volunteer')->name('volunt
 });
 
 Route::middleware(['auth', 'role:sponsor'])->prefix('sponsor')->name('sponsor.')->group(function () {
-    Route::get('/dashboard', fn () => redirect('/'))->name('dashboard');
+    Route::get('/dashboard', [SponsorDashboardController::class, 'index'])->name('dashboard');
+    // Placeholders — replaced in C35/C36/C37
+    Route::get('/sponsorships/create', fn () => redirect('/sponsor/dashboard'))->name('sponsorships.create');
+    Route::get('/sponsorships/{sponsorship}/acknowledgment', fn () => redirect('/sponsor/dashboard'))->name('sponsorships.acknowledgment');
+    Route::get('/sponsorships/{sponsorship}/report', fn () => redirect('/sponsor/dashboard'))->name('sponsorships.report');
 });
 
 require __DIR__.'/auth.php';
