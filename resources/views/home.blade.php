@@ -50,42 +50,14 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-gray-100">
                 @foreach([
-                    ['value' => $stats['events'],      'label' => 'Events Hosted',  'suffix' => '+'],
-                    ['value' => $stats['participants'], 'label' => 'Participants',   'suffix' => '+'],
-                    ['value' => $stats['volunteers'],  'label' => 'Volunteers',     'suffix' => '+'],
-                    ['value' => $stats['members'],     'label' => 'Members',        'suffix' => '+'],
+                    ['value' => '1,250+', 'label' => 'Events Hosted'],
+                    ['value' => '35K+',   'label' => 'Participants'],
+                    ['value' => '8,500+', 'label' => 'Volunteers'],
+                    ['value' => '120+',   'label' => 'Communities'],
                 ] as $stat)
                     <div class="py-6 text-center">
-                        <p class="text-3xl font-bold text-green-700">{{ $stat['value'] > 0 ? number_format($stat['value']) . $stat['suffix'] : '—' }}</p>
+                        <p class="text-3xl font-bold text-green-700">{{ $stat['value'] }}</p>
                         <p class="text-xs text-gray-500 mt-1 uppercase tracking-wide">{{ $stat['label'] }}</p>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-
-    <!-- How it works -->
-    <div class="bg-gray-50 py-16">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-2xl font-bold text-gray-900">How It Works</h2>
-                <p class="text-gray-500 mt-2">Getting involved takes just three steps</p>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 relative">
-                <!-- Connector line (desktop only) -->
-                <div class="hidden sm:block absolute top-8 left-1/6 right-1/6 h-0.5 bg-green-100 z-0"></div>
-
-                @foreach([
-                    ['step' => '1', 'title' => 'Create an Account', 'desc' => 'Sign up as a member, organizer, volunteer, or sponsor — each role has its own set of features.'],
-                    ['step' => '2', 'title' => 'Find an Event',      'desc' => 'Browse upcoming community events, filter by category, and read all the details before committing.'],
-                    ['step' => '3', 'title' => 'Join or Contribute', 'desc' => 'Register as an attendee, sign up to volunteer, or sponsor an event that matters to you.'],
-                ] as $item)
-                    <div class="relative z-10 text-center">
-                        <div class="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 shadow-lg shadow-green-200">
-                            {{ $item['step'] }}
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">{{ $item['title'] }}</h3>
-                        <p class="text-sm text-gray-500 leading-relaxed">{{ $item['desc'] }}</p>
                     </div>
                 @endforeach
             </div>
@@ -176,6 +148,32 @@
                    class="inline-block border border-gray-200 text-gray-600 hover:border-green-500 hover:text-green-600 px-6 py-2.5 rounded-full text-sm font-medium transition">
                     View All Events
                 </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="bg-gray-50 py-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl font-bold text-gray-900">How It Works</h2>
+                <p class="text-gray-500 mt-2">Getting involved takes just three steps</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 relative">
+                <div class="hidden sm:block absolute top-8 left-1/6 right-1/6 h-0.5 bg-green-100 z-0"></div>
+                @foreach([
+                    ['step' => '1', 'title' => 'Create an Account', 'desc' => 'Sign up as a member, organizer, volunteer, or sponsor — each role has its own set of features.'],
+                    ['step' => '2', 'title' => 'Find an Event',      'desc' => 'Browse upcoming community events, filter by category, and read all the details before committing.'],
+                    ['step' => '3', 'title' => 'Join or Contribute', 'desc' => 'Register as an attendee, sign up to volunteer, or sponsor an event that matters to you.'],
+                ] as $item)
+                    <div class="relative z-10 text-center">
+                        <div class="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 shadow-lg shadow-green-200">
+                            {{ $item['step'] }}
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">{{ $item['title'] }}</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed">{{ $item['desc'] }}</p>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
