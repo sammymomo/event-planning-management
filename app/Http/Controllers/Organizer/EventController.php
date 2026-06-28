@@ -9,6 +9,7 @@ use App\Services\AuditLogger;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -16,7 +17,7 @@ class EventController extends Controller
 
     public function create()
     {
-        return view('organizer.events.create');
+        return view('organizer.events.create', ['categories' => Event::CATEGORIES]);
     }
 
     public function store(Request $request)
@@ -26,7 +27,13 @@ class EventController extends Controller
             'description' => 'required|string',
             'date'        => 'required|date|after_or_equal:today',
             'location'    => 'required|string|max:255',
+            'category'    => 'nullable|string|max:100',
+            'image'       => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('events', 'public');
+        }
 
         $event = Auth::user()->organizedEvents()->create($validated);
 
@@ -40,7 +47,7 @@ class EventController extends Controller
     {
         $this->authorize('update', $event);
         $event->load('volunteerTasks');
-        return view('organizer.events.edit', compact('event'));
+        return view('organizer.events.edit', ['event' => $event, 'categories' => Event::CATEGORIES]);
     }
 
     public function update(Request $request, Event $event)
@@ -52,7 +59,16 @@ class EventController extends Controller
             'description' => 'required|string',
             'date'        => 'required|date',
             'location'    => 'required|string|max:255',
+            'category'    => 'nullable|string|max:100',
+            'image'       => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            if ($event->image) {
+                Storage::disk('public')->delete($event->image);
+            }
+            $validated['image'] = $request->file('image')->store('events', 'public');
+        }
 
         $event->update($validated);
 

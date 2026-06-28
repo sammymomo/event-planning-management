@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
 use App\Enums\EventStatus;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventCatalogController extends Controller
@@ -33,9 +33,14 @@ class EventCatalogController extends Controller
             $query->where('date', '<=', $to);
         }
 
-        $events = $query->orderBy('date')->paginate(9)->withQueryString();
+        if ($category = $request->input('category')) {
+            $query->where('category', $category);
+        }
 
-        return view('events.catalog', compact('events'));
+        $events = $query->orderBy('date')->paginate(9)->withQueryString();
+        $categories = Event::CATEGORIES;
+
+        return view('events.catalog', compact('events', 'categories'));
     }
 
     public function show(Event $event)

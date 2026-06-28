@@ -1,7 +1,13 @@
 <x-app-layout>
     <!-- Hero Banner -->
-    <div class="bg-gradient-to-br from-green-700 to-green-950 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="relative bg-gradient-to-br from-green-700 to-green-950 text-white overflow-hidden">
+        @if($event->image)
+            <div class="absolute inset-0">
+                <img src="{{ asset('storage/' . $event->image) }}" alt="{{ $event->title }}"
+                     class="w-full h-full object-cover opacity-25">
+            </div>
+        @endif
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
             <!-- Breadcrumb -->
             <div class="flex items-center gap-2 text-sm text-green-200 mb-6">
                 <a href="{{ route('events.index') }}" class="hover:text-white transition">Browse Events</a>
@@ -11,9 +17,16 @@
 
             <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
                 <div>
-                    <span class="inline-block bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
-                        Upcoming
-                    </span>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="inline-block bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                            Upcoming
+                        </span>
+                        @if($event->category)
+                            <span class="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                {{ $event->category }}
+                            </span>
+                        @endif
+                    </div>
                     <h1 class="text-3xl sm:text-4xl font-bold leading-tight">{{ $event->title }}</h1>
                     <div class="mt-4 flex flex-wrap gap-5 text-sm text-green-100">
                         <span class="flex items-center gap-2">
