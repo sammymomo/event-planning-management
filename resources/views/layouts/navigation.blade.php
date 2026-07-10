@@ -62,10 +62,9 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-2.405A2.032 2.032 0 0118 13.516V10a6 6 0 10-12 0v3.516c0 .394-.143.765-.405 1.079L4 17h5m6 0a3 3 0 11-6 0" />
                         </svg>
-                        @php $unread = auth()->user()->notifications()->where('read_status', false)->count(); @endphp
-                        @if($unread > 0)
+                        @if($unreadNotificationCount > 0)
                             <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                                {{ $unread > 9 ? '9+' : $unread }}
+                                {{ $unreadNotificationCount > 9 ? '9+' : $unreadNotificationCount }}
                             </span>
                         @endif
                     </a>

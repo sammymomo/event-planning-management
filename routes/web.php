@@ -18,6 +18,7 @@ use App\Http\Controllers\Organizer\AttendeeController as OrganizerAttendeeContro
 use App\Http\Controllers\Organizer\DashboardController as OrganizerDashboardController;
 use App\Http\Controllers\Organizer\EventController as OrganizerEventController;
 use App\Http\Controllers\Organizer\FeedbackController as OrganizerFeedbackController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,8 +33,7 @@ Route::get('/my-registrations', [RegistrationController::class, 'index'])->middl
 Route::get('/events/{event}/feedback/create', [FeedbackController::class, 'create'])->middleware('auth')->name('events.feedback.create');
 Route::post('/events/{event}/feedback', [FeedbackController::class, 'store'])->middleware('auth')->name('events.feedback.store');
 
-// Placeholder — replaced in C40
-Route::get('/notifications', fn () => redirect('/'))->name('notifications.index');
+Route::get('/notifications', [NotificationController::class, 'index'])->middleware('auth')->name('notifications.index');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
