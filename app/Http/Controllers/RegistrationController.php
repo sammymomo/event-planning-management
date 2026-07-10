@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventRegistration;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,11 @@ class RegistrationController extends Controller
             'event_id' => $event->id,
             'status'   => 'confirmed',
         ]);
+
+        NotificationService::send(
+            Auth::user(),
+            "You're registered for \"{$event->title}\" on {$event->date->format('M j, Y')}."
+        );
 
         return back()->with('success', 'You are registered! See you at ' . $event->title . '.');
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\VolunteerAssignment;
 use App\Models\VolunteerTask;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
@@ -47,6 +48,11 @@ class TaskController extends Controller
             'user_id' => Auth::id(),
             'task_id' => $task->id,
         ]);
+
+        NotificationService::send(
+            Auth::user(),
+            "You signed up to volunteer as \"{$task->task_name}\" for \"{$task->event->title}\"."
+        );
 
         return back()->with('success', 'You have signed up for: ' . $task->task_name);
     }
