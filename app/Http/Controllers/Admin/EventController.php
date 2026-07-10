@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Enums\EventStatus;
+use App\Mail\EventApprovalStatus;
 use App\Models\Event;
 use App\Services\AuditLogger;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
@@ -37,6 +39,8 @@ class EventController extends Controller
             "Your event \"{$event->title}\" has been approved and is now live."
         );
 
+        Mail::to($event->organizer->email)->send(new EventApprovalStatus($event->organizer, $event, true));
+
         return back()->with('success', "Event \"{$event->title}\" has been approved.");
     }
 
@@ -48,6 +52,8 @@ class EventController extends Controller
             $event->organizer,
             "Your event \"{$event->title}\" was not approved. Please contact an admin for details."
         );
+
+        Mail::to($event->organizer->email)->send(new EventApprovalStatus($event->organizer, $event, false));
 
         return back()->with('success', "Event \"{$event->title}\" has been rejected.");
     }

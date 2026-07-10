@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegistrationConfirmed;
 use App\Models\Event;
 use App\Models\EventRegistration;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class RegistrationController extends Controller
 {
@@ -35,6 +37,8 @@ class RegistrationController extends Controller
             Auth::user(),
             "You're registered for \"{$event->title}\" on {$event->date->format('M j, Y')}."
         );
+
+        Mail::to(Auth::user()->email)->send(new RegistrationConfirmed(Auth::user(), $event));
 
         return back()->with('success', 'You are registered! See you at ' . $event->title . '.');
     }
