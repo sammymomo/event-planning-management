@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\AuditLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 
 class SettingController extends Controller
 {
@@ -59,6 +61,8 @@ class SettingController extends Controller
         file_put_contents($env, implode('', $updated));
 
         Artisan::call('config:clear');
+
+        AuditLogger::log(Auth::user(), 'updated system settings');
 
         return redirect()->route('admin.settings.index')
             ->with('success', 'Settings saved.');

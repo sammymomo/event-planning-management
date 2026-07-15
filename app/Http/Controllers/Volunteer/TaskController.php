@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\VolunteerAssignment;
 use App\Models\VolunteerTask;
+use App\Services\AuditLogger;
 use App\Services\NotificationService;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,6 +50,7 @@ class TaskController extends Controller
             'task_id' => $task->id,
         ]);
 
+        AuditLogger::log(Auth::user(), "signed up for volunteer task \"{$task->task_name}\" on event #{$task->event->id}: {$task->event->title}");
         NotificationService::send(
             Auth::user(),
             "You signed up to volunteer as \"{$task->task_name}\" for \"{$task->event->title}\"."
@@ -62,6 +64,8 @@ class TaskController extends Controller
         VolunteerAssignment::where('user_id', Auth::id())
             ->where('task_id', $task->id)
             ->delete();
+
+        AuditLogger::log(Auth::user(), "left volunteer task \"{$task->task_name}\" on event #{$task->event->id}");
 
         return back()->with('success', 'You have left the task.');
     }

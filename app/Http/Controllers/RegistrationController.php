@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\RegistrationConfirmed;
 use App\Models\Event;
 use App\Models\EventRegistration;
+use App\Services\AuditLogger;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,7 @@ class RegistrationController extends Controller
             'status'   => 'confirmed',
         ]);
 
+        AuditLogger::log(Auth::user(), "registered for event #{$event->id}: {$event->title}");
         NotificationService::send(
             Auth::user(),
             "You're registered for \"{$event->title}\" on {$event->date->format('M j, Y')}."
@@ -49,6 +51,8 @@ class RegistrationController extends Controller
             ->where('event_id', $event->id)
             ->where('status', 'confirmed')
             ->update(['status' => 'canceled']);
+
+        AuditLogger::log(Auth::user(), "canceled registration for event #{$event->id}: {$event->title}");
 
         return back()->with('success', 'Your registration has been canceled.');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Feedback;
+use App\Services\AuditLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -43,6 +44,8 @@ class FeedbackController extends Controller
             'rating'   => $request->rating,
             'comments' => $request->comments,
         ]);
+
+        AuditLogger::log(Auth::user(), "submitted feedback for event #{$event->id}: {$event->title}");
 
         return redirect()->route('events.show', $event)
             ->with('success', 'Thank you for your feedback!');

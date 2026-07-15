@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sponsor;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Sponsorship;
+use App\Services\AuditLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,6 +41,8 @@ class SponsorshipController extends Controller
             'resource_type' => $request->resource_type,
             'acknowledged'  => false,
         ]);
+
+        AuditLogger::log(Auth::user(), "submitted sponsorship of \${$request->amount} for event #{$event->id}: {$event->title}");
 
         return redirect()->route('sponsor.dashboard')
             ->with('success', 'Sponsorship submitted successfully!');
