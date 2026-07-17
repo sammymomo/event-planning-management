@@ -24,6 +24,12 @@
         </div>
 
         <div>
+            <x-input-label for="phone" :value="__('Phone Number')" />
+            <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full" :value="old('phone', $user->phone)" autocomplete="tel" placeholder="Optional" />
+            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+        </div>
+
+        <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
@@ -45,6 +51,17 @@
                     @endif
                 </div>
             @endif
+        </div>
+
+        <div>
+            <x-input-label :value="__('Email Notifications')" />
+            <label class="mt-2 flex items-center gap-3 cursor-pointer select-none">
+                <input type="hidden" name="email_notifications" value="0">
+                <input type="checkbox" name="email_notifications" value="1" id="email_notifications"
+                    class="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                    {{ old('email_notifications', $user->email_notifications) ? 'checked' : '' }}>
+                <span class="text-sm text-gray-600">Receive email updates for registrations, event approvals, and reminders</span>
+            </label>
         </div>
 
         <div class="flex items-center gap-4">
