@@ -4,12 +4,6 @@
     <div class="bg-gray-50 min-h-screen py-8">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-            @if(session('success'))
-                <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-700">
-                    {{ session('success') }}
-                </div>
-            @endif
-
             <!-- Pending Events -->
             <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">

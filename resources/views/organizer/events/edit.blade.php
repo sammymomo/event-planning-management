@@ -14,12 +14,6 @@
     <div class="bg-gray-50 min-h-screen py-8">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
-            @if(session('success'))
-                <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-700">
-                    {{ session('success') }}
-                </div>
-            @endif
-
             @if($errors->any())
                 <div class="bg-red-50 border border-red-200 rounded-xl p-4">
                     <ul class="list-disc list-inside text-sm text-red-700 space-y-1">

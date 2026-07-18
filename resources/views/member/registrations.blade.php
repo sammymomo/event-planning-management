@@ -7,12 +7,6 @@
                 <p class="text-sm text-gray-500 mt-1">Events you have signed up for</p>
             </div>
 
-            @if(session('success'))
-                <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-700">
-                    {{ session('success') }}
-                </div>
-            @endif
-
             <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">

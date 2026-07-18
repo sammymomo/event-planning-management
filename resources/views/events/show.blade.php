@@ -156,17 +156,7 @@
                 <!-- Sidebar -->
                 <div class="space-y-4">
 
-                    <!-- Flash messages -->
-                    @if(session('success'))
-                        <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-700">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-                    @if(session('error'))
-                        <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+
 
                     <!-- Register / Actions -->
                     <div class="bg-white rounded-xl shadow-sm p-5">

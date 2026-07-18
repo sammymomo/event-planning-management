@@ -4,10 +4,6 @@
     <div class="bg-gray-50 min-h-screen py-8">
         <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
-            @if(session('error'))
-                <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">{{ session('error') }}</div>
-            @endif
-
             <form method="POST" action="{{ route('sponsor.sponsorships.store') }}"
                   class="bg-white rounded-xl shadow-sm divide-y divide-gray-100">
                 @csrf

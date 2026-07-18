@@ -4,10 +4,6 @@
     <div class="bg-gray-50 min-h-screen py-8">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
-            @if(session('success'))
-                <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-700">{{ session('success') }}</div>
-            @endif
-
             <!-- Stats -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 @foreach([

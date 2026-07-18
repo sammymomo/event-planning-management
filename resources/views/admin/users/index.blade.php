@@ -4,17 +4,6 @@
     <div class="bg-gray-50 min-h-screen py-8">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
-            @if(session('success'))
-                <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-700">
-                    {{ session('success') }}
-                </div>
-            @endif
-            @if(session('error'))
-                <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">
-                    {{ session('error') }}
-                </div>
-            @endif
-
             <!-- Filters -->
             <form method="GET" action="{{ route('admin.users.index') }}"
                   class="bg-white rounded-xl shadow-sm p-4 flex flex-col sm:flex-row gap-3">

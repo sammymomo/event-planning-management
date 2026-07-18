@@ -4,13 +4,6 @@
     <div class="bg-gray-50 min-h-screen py-8">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
 
-            @if(session('success'))
-                <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-sm text-green-700">{{ session('success') }}</div>
-            @endif
-            @if(session('error'))
-                <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">{{ session('error') }}</div>
-            @endif
-
             @forelse($tasks as $task)
                 <div class="bg-white rounded-xl shadow-sm p-5 flex flex-col sm:flex-row sm:items-start gap-4">
                     <div class="flex-1">
