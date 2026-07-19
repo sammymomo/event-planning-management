@@ -12,24 +12,23 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased bg-gray-100 min-h-screen flex flex-col justify-center items-center px-4 py-10">
+    <body class="font-sans text-gray-900 antialiased bg-gray-100 min-h-screen flex flex-col">
 
-        <div class="w-full max-w-md">
-            <!-- Logo icon -->
-            <div class="flex justify-center mb-6">
-                <x-application-logo class="w-14 h-14" />
-            </div>
+        @include('layouts.navigation')
 
-            <!-- Card -->
-            <div class="bg-white rounded-2xl shadow-md px-8 py-8">
-                {{ $slot }}
-            </div>
+        <div class="flex-1 flex flex-col justify-center items-center px-4 py-10">
+            <div class="w-full max-w-md">
+                <!-- Card -->
+                <div class="bg-white rounded-2xl shadow-md px-8 py-8">
+                    {{ $slot }}
+                </div>
 
-            <!-- Back to homepage -->
-            <div class="text-center mt-5">
-                <a href="{{ route('home') }}" class="text-sm text-gray-500 hover:text-green-600 transition">
-                    ← Back to Homepage
-                </a>
+                <!-- Back to homepage -->
+                <div class="text-center mt-5">
+                    <a href="{{ route('home') }}" class="text-sm text-gray-500 hover:text-green-600 transition">
+                        ← Back to Homepage
+                    </a>
+                </div>
             </div>
         </div>
     </body>
